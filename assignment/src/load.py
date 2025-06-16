@@ -1,5 +1,4 @@
 from typing import Dict
-
 from pandas import DataFrame
 from sqlalchemy.engine import Engine
 
