@@ -14,8 +14,4 @@ def load(data_frames: Dict[str, DataFrame], database: Engine):
         # Usa to_sql para cargar el DataFrame como tabla en la base de datos
         df.to_sql(table_name, con=database, if_exists='replace', index=False)
         
-    # TODO: Implement this function. For each dataframe in the dictionary, you must
-    # use pandas.Dataframe.to_sql() to load the dataframe into the database as a
-    # table.
-    # For the table name use the `data_frames` dict keys.
-    raise NotImplementedError
+    

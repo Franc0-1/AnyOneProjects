@@ -179,9 +179,13 @@ def plot_freight_value_weight_relationship(df: DataFrame):
     Args:
         df (DataFrame): Dataframe with freight value weight relationship query result
     """
-    # TODO: plot freight value weight relationship using seaborn scatterplot.
-    # Your x-axis should be weight and, y-axis freight value.
-    raise NotImplementedError
+    # Plot freight value vs weight using seaborn scatterplot
+    plt.figure(figsize=(8, 5))
+    sns.scatterplot(data=df, x="weight", y="freight_value")
+    plt.title("Freight Value vs Weight")
+    plt.xlabel("Weight")
+    plt.ylabel("Freight Value")
+    plt.show()
 
 
 def plot_delivery_date_difference(df: DataFrame):
@@ -201,7 +205,17 @@ def plot_order_amount_per_day_with_holidays(df: DataFrame):
     Args:
         df (DataFrame): Dataframe with order amount per day with holidays query result
     """
-    # TODO: plot order amount per day with holidays using matplotlib.
-    # Mark holidays with vertical lines.
-    # Hint: use plt.axvline.
-    raise NotImplementedError
+    # Assumes df has columns: 'date', 'order_amount', and 'is_holiday' (boolean or 0/1)
+    plt.figure(figsize=(12, 6))
+    plt.plot(df['date'], df['order_amount'], marker='o', label='Order Amount')
+    # Mark holidays with vertical lines
+    if 'is_holiday' in df.columns:
+        holiday_dates = df[df['is_holiday'] == 1]['date']
+        for holiday in holiday_dates:
+            plt.axvline(x=holiday, color='red', linestyle='--', alpha=0.7)
+    plt.xlabel('Date')
+    plt.ylabel('Order Amount')
+    plt.title('Order Amount Per Day with Holidays')
+    plt.legend()
+    plt.tight_layout()
+    plt.show()

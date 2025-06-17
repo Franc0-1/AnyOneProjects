@@ -7,8 +7,8 @@ SELECT TOP 10
 	c.customer_state,
 	SUM(oi.price * oi.quantity) AS Revenue
 FROM
-	orders o
-	JOIN order_items oi ON o.order_id = oi.order_id
+	olist_orders o
+	JOIN olist_order_items oi ON o.order_id = oi.order_id
 	JOIN customers c ON o.customer_id = c.customer_id
 WHERE
 	o.order_status = 'delivered'
