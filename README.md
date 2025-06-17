@@ -64,3 +64,9 @@ We provide unit tests along with the project that you can run and check from you
 
 ```console
 $ pytest tests/
+```
+
+If you want to learn more about testing Python code, please read:
+- [Effective Python Testing With Pytest](https://realpython.com/pytest-python-testing/)
+- [The Hitchhiker’s Guide to Python: Testing Your Code](https://docs.python-guide.org/writing/tests/)
+
