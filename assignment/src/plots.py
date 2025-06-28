@@ -174,17 +174,13 @@ def plot_top_10_revenue_categories(df: DataFrame):
 
 
 def plot_freight_value_weight_relationship(df: DataFrame):
-    """Plot freight value weight relationship
-
-    Args:
-        df (DataFrame): Dataframe with freight value weight relationship query result
-    """
-    # Plot freight value vs weight using seaborn scatterplot
-    plt.figure(figsize=(8, 5))
-    sns.scatterplot(data=df, x="weight", y="freight_value")
-    plt.title("Freight Value vs Weight")
-    plt.xlabel("Weight")
+    """Plot freight value weight relationship"""
+    plt.figure(figsize=(10, 6))
+    sns.scatterplot(data=df, x="product_weight_g", y="freight_value")
+    plt.title("Freight Value vs. Product Weight (g)")
+    plt.xlabel("Product Weight (g)")
     plt.ylabel("Freight Value")
+    plt.tight_layout()
     plt.show()
 
 
@@ -203,19 +199,36 @@ def plot_order_amount_per_day_with_holidays(df: DataFrame):
     """Plot order amount per day with holidays
 
     Args:
-        df (DataFrame): Dataframe with order amount per day with holidays query result
+        df (DataFrame): DataFrame with order amount per day and holiday flags
     """
-    # Assumes df has columns: 'date', 'order_amount', and 'is_holiday' (boolean or 0/1)
+    # Convert the Spark DataFrame to Pandas (if needed)
+    pandas_df = df
+
+    # Set up the figure
     plt.figure(figsize=(12, 6))
-    plt.plot(df['date'], df['order_amount'], marker='o', label='Order Amount')
-    # Mark holidays with vertical lines
-    if 'is_holiday' in df.columns:
-        holiday_dates = df[df['is_holiday'] == 1]['date']
-        for holiday in holiday_dates:
-            plt.axvline(x=holiday, color='red', linestyle='--', alpha=0.7)
+
+    # Plot daily order counts
+    plt.plot(pandas_df['date'], pandas_df['order_count'],
+             marker='o', linestyle='-', label='Daily Orders')
+
+    # Highlight holidays with vertical lines
+    holidays = pandas_df[pandas_df['holiday']]
+    for date in holidays['date']:
+        plt.axvline(x=date, color='r', linestyle='--', alpha=0.7, label='Holiday')
+
+    # Customize the plot
+    plt.title('Number of Orders Per Day (Highlighting Holidays)')
     plt.xlabel('Date')
-    plt.ylabel('Order Amount')
-    plt.title('Order Amount Per Day with Holidays')
-    plt.legend()
+    plt.ylabel('Number of Orders')
+    plt.grid(True, alpha=0.3)
+
+    # Avoid duplicate labels in the legend
+    handles, labels = plt.gca().get_legend_handles_labels()
+    unique_labels = dict(zip(labels, handles))
+    plt.legend(unique_labels.values(), unique_labels.keys())
+
+    # Rotate dates for better readability
+    plt.xticks(rotation=45)
     plt.tight_layout()
+
     plt.show()

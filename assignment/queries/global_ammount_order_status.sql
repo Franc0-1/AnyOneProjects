@@ -8,4 +8,6 @@ SELECT
 FROM
     olist_orders
 GROUP BY
+    order_status
+ORDER BY
     order_status;
